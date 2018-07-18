@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+	  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="springmvc.mapper.PhoneMapper">
+
+	<insert id="create">
+		insert into cellphone(id,Brand,Model,Os,cpuBrand,ram,storage,color,price,description)
+		values(id.nextval,#{brand},#{model},#{os},#{cpuBrand},#{ram},#{storage},#{color},#{price},#{description})
+	
+	</insert>	
+	<update id="update">
+	update cellphone set brand=#{brand},model=#{model},os=#{os},cpuBrand=#{cpuBrand},
+		ram=#{ram},storage=#{storage},color=#{color},description=#{description},price=#{price}  
+	where id=#{id} 
+	</update>
+	<delete id="delete">
+			delete cellphone where id=#{id}
+	</delete>
+	<select id="findOne" resultType="Phone">
+		select * from cellphone where id=#{id} 
+	</select>
+	<select id="findAll" resultType="Phone">
+		select * from cellphone order by 1
+	</select>
+</mapper>

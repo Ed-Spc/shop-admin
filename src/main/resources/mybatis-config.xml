@@ -6,6 +6,6 @@
 <configuration>
 	<typeAliases>
 <!-- 	在mapper.xml中可以写pojo的简单类名，mybatis会自动去指定包下找类 -->
-		<package name="springmvc.pojo" />
+		<package name="springmvc.model" />
 	</typeAliases>
 </configuration>
