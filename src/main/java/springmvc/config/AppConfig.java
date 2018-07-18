@@ -14,6 +14,7 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -50,12 +51,16 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 			sf.setConfigLocation(new ClassPathResource("mybatis-config.xml"));
 			sf.setDataSource(dataSource);
 			return sf;
-		}
+		}			
 		
 		@Bean	// spring事务需要事务管理器组件
 		public PlatformTransactionManager transactionManager(DataSource dataSource) {
 			
 			return new DataSourceTransactionManager(dataSource);
 		}
-	
+	@Override //springMVC无法处理的交给servlet处理
+	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
+	// TODO Auto-generated method stub
+		configurer.enable();
+	}
 }

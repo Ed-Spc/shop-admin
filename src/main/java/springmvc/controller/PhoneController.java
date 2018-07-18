@@ -1,7 +1,5 @@
 package springmvc.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -33,7 +31,7 @@ public class PhoneController {
 /*==========================================================================================*/	
 	
 	
-	@RequestMapping(method=RequestMethod.GET, value="/phones/list") 
+	@RequestMapping(method=RequestMethod.GET, value="/phones/") 
 	public String list(Model model) {
 		List<Phone> phones= phoneService.findAll();
 		model.addAttribute("phones", phones);

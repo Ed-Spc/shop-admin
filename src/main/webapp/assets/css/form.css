@@ -1,0 +1,8 @@
+@charset "UTF-8";
+.field-error{
+	color:red;	
+}
+#a{		
+	width:250px;
+	display:inline-block;
+}
