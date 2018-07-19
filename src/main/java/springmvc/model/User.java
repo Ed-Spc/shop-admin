@@ -1,6 +1,8 @@
 package springmvc.model;
 
 import java.lang.reflect.GenericDeclaration;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.validation.constraints.NotNull;
@@ -28,8 +30,11 @@ public class User {
 	private Date lastlogin;
 	
 	
-	public Date getLastlogin() {
-		return lastlogin;
+	public String getLastlogin() {
+		
+		DateFormat bf = new SimpleDateFormat("yyyy-MM-dd E a HH:mm:ss");
+		
+		return bf.format(lastlogin);
 	}
 	public void setLastlogin(Date lastlogin) {
 		this.lastlogin = lastlogin;
