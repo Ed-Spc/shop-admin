@@ -14,26 +14,45 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfig;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
+import org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver;
 
-@Configuration			//±êÃ÷ÅäÖÃÎÄ¼ş
-@ComponentScan("springmvc")   //¿ªÆô×Ô¶¯É¨Ãè
+@Configuration			//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½
+@ComponentScan("springmvc")   //ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½É¨ï¿½ï¿½
 @EnableWebMvc 					
 @MapperScan("springmvc.mapper") 	
-@EnableTransactionManagement //¿ªÆôspringÊÂÎñÖ§³Ö
+@EnableTransactionManagement //ï¿½ï¿½ï¿½ï¿½springï¿½ï¿½ï¿½ï¿½Ö§ï¿½ï¿½
 @PropertySource("classpath:jdbc.properties")		
 public class AppConfig extends WebMvcConfigurerAdapter {
-		@Override
+	/*	@Override
 		public void configureViewResolvers(ViewResolverRegistry registry) {
 			// book-list -> /WEB-INF/jsp/book-list.jsp
-			// ¶ÔÓÚ¿ØÖÆÆ÷·½·¨·µ»ØµÄ×Ö·û´®£¬»áÓÃÒÔÏÂ¹æÔò½âÎö³ÉjspÂ·¾¶£¬È»ºóforward
-			// Ç°×º + ·µ»Ø×Ö·û´® + ºó×º = jspÂ·¾¶
-			//            Ç°×º                                      ºó×º
+			// ï¿½ï¿½ï¿½Ú¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½ï¿½Ö·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½jspÂ·ï¿½ï¿½ï¿½ï¿½È»ï¿½ï¿½forward
+			// Ç°×º + ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½ + ï¿½ï¿½×º = jspÂ·ï¿½ï¿½
+			//            Ç°×º                                      ï¿½ï¿½×º
 			registry.jsp("/WEB-INF/jsp/", ".jsp");
+		}*/
+		
+		@Bean
+		public ViewResolver freeMarkerViewResolver() {
+			FreeMarkerViewResolver fmkr = new FreeMarkerViewResolver("",".ftl");
+			fmkr.setCache(false);  //å…³é—­ç¼“å­˜ é€‚åˆå¼€å‘ä¿®æ”¹
+			fmkr.setContentType("text/html;charset=utf-8");  //é˜²æ­¢ä¹±ç 
+			return fmkr;
 		}
+		@Bean
+		public FreeMarkerConfigurer freeMarkerConfigurer() {
+			FreeMarkerConfigurer config =new FreeMarkerConfigurer();
+			config.setTemplateLoaderPath("/WEB-INF/freemarker/");
+			return config;
+		} 
+		
 		
 		@Bean
 		public DataSource dataSource(Environment env) { 
@@ -45,7 +64,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 			return ds;
 		}	
 		
-		@Bean // ¶¨ÒåMybatisµÄ»á»°¹¤³§
+		@Bean // ï¿½ï¿½ï¿½ï¿½Mybatisï¿½Ä»á»°ï¿½ï¿½ï¿½ï¿½
 		public SqlSessionFactoryBean sqlSessionFactory(DataSource dataSource) {
 			SqlSessionFactoryBean sf = new SqlSessionFactoryBean();
 			sf.setConfigLocation(new ClassPathResource("mybatis-config.xml"));
@@ -53,12 +72,12 @@ public class AppConfig extends WebMvcConfigurerAdapter {
 			return sf;
 		}			
 		
-		@Bean	// springÊÂÎñĞèÒªÊÂÎñ¹ÜÀíÆ÷×é¼ş
+		@Bean	// springï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 		public PlatformTransactionManager transactionManager(DataSource dataSource) {
 			
 			return new DataSourceTransactionManager(dataSource);
 		}
-	@Override //springMVCÎŞ·¨´¦ÀíµÄ½»¸øservlet´¦Àí
+	@Override //springMVCï¿½Ş·ï¿½ï¿½ï¿½ï¿½ï¿½Ä½ï¿½ï¿½ï¿½servletï¿½ï¿½ï¿½ï¿½
 	public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
 	// TODO Auto-generated method stub
 		configurer.enable();
